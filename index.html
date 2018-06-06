@@ -1,0 +1,213 @@
+<html>
+    <head>
+<style>
+body {
+  margin: 5px;
+    background: #000;
+}
+
+.key {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 150%;
+  border: 1px solid #dd3d3d;
+  transition: all .07s ease;
+  text-shadow: 0 0 8px #3831f5;    
+}
+
+.key:nth-child(even) {
+  background-color: #ccc;
+  color: #000;
+}
+
+.keys {
+  width: 1050px;
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: repeat(10, 100px);
+  grid-template-rows: 100px 100px 100px 100px;
+  grid-auto-flow: row;
+  margin:
+}        
+kbd {
+  display: block;
+  font-size: 35px;
+} 
+    
+    
+.playing {
+  transform: scale(1.1);
+  border-color: #dd3d3d;
+  box-shadow: 0 0 16px #493ddd;
+}    
+</style>
+    </head>
+    <body>
+        <div class="keys">
+<!-- St row -->            
+            <div data-key="49" class="key">
+                <kbd>1</kbd>
+            </div>
+            <div data-key="50" class="key">
+                <kbd>2</kbd>
+            </div>
+            <div data-key="51" class="key">
+                <kbd>3</kbd>
+            </div>
+            <div data-key="52" class="key">
+                <kbd>4</kbd>
+            </div>
+            <div data-key="53" class="key">
+                <kbd>5</kbd>
+            </div>
+            <div data-key="54" class="key">
+                <kbd>6</kbd>
+            </div>
+            <div data-key="55" class="key">
+                <kbd>7</kbd>
+            </div>
+            <div data-key="56" class="key">
+                <kbd>8</kbd>
+            </div>
+            <div data-key="57" class="key">
+                <kbd>9</kbd>
+            </div>
+            <div data-key="48" class="key">
+                <kbd>0</kbd>
+            </div>
+<!-- Nd row -->
+            <div data-key="81" class="key">
+                <kbd>Q</kbd>
+            </div>
+            <div data-key="87" class="key">
+                <kbd>W</kbd>
+            </div>
+            <div data-key="69" class="key">
+                <kbd>E</kbd>
+            </div>
+            <div data-key="82" class="key">
+                <kbd>R</kbd>
+            </div>
+            <div data-key="84" class="key">
+                <kbd>T</kbd>
+            </div>
+            <div data-key="89" class="key">
+                <kbd>Y</kbd>
+            </div>
+            <div data-key="85" class="key">
+                <kbd>U</kbd>
+            </div>
+            <div data-key="73" class="key">
+                <kbd>I</kbd>
+            </div>
+            <div data-key="79" class="key">
+                <kbd>O</kbd>
+            </div>
+            <div data-key="80" class="key">
+                <kbd>P</kbd>
+            </div>
+<!-- Rd row -->            
+            <div data-key="65" class="key">
+                <kbd>A</kbd>
+            </div>
+            <div data-key="83" class="key">
+                <kbd>S</kbd>
+            </div>
+            <div data-key="68" class="key">
+                <kbd>D</kbd>
+            </div>
+            <div data-key="70" class="key">
+                <kbd>F</kbd>
+            </div>
+            <div data-key="71" class="key">
+                <kbd>G</kbd>
+            </div>
+            <div data-key="72" class="key">
+                <kbd>H</kbd>
+            </div>
+            <div data-key="74" class="key">
+                <kbd>J</kbd>
+            </div>
+            <div data-key="75" class="key">
+                <kbd>K</kbd>
+            </div>
+            <div data-key="76" class="key">
+                <kbd>L</kbd>
+            </div>
+            <div data-key="186" class="key">
+                <kbd>;</kbd>
+            </div>
+<!-- Th row -->
+            <div data-key="90" class="key">
+                <kbd>Z</kbd>
+            </div>
+            <div data-key="88" class="key">
+                <kbd>X</kbd>
+            </div>
+            <div data-key="67" class="key">
+                <kbd>C</kbd>
+            </div>
+            <div data-key="86" class="key">
+                <kbd>V</kbd>
+            </div>
+            <div data-key="66" class="key">
+                <kbd>B</kbd>
+            </div>
+            <div data-key="78" class="key">
+                <kbd>N</kbd>
+            </div>
+            <div data-key="77" class="key">
+                <kbd>M</kbd>
+            </div>
+            <div data-key="188" class="key">
+                <kbd>,</kbd>
+            </div>
+            <div data-key="190" class="key">
+                <kbd>.</kbd>
+            </div>
+            <div data-key="191" class="key">
+                <kbd>/</kbd>
+            </div>   
+            
+            
+            <audio data-key="65" src="audio/kick.wav"></audio>
+            <audio data-key="83" src="audio/snare.wav"></audio>
+            <audio data-key="68" src="audio/tom1.wav"></audio>
+            <audio data-key="70" src="audio/tom2.wav"></audio>
+            <audio data-key="71" src="audio/tom3.wav"></audio>
+            <audio data-key="72" src="audio/hihat.wav"></audio>
+            <audio data-key="74" src="audio/crash.wav"></audio>
+            <audio data-key="75" src="audio/ride.wav"></audio>            
+            
+            
+            
+    <script>
+        function playSound(e){
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            if(!audio) return;
+            audio.currentTime = 0;
+            audio.play();
+            key.classList.add('playing');     
+        }
+
+        function removeTransition(e){
+            if (e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+        }
+            
+        const keys = Array.from(document.querySelectorAll('.key'));
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+    </script>            
+            
+            
+            
+            
+            
+            
+        </div>
+    </body>
+</html>
